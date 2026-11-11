@@ -2,7 +2,7 @@
 
 An AI-powered invoice & expense manager for a small business (demo business: **BrightWeb Studio**, a web design studio). It combines a real SQL database, both REST **and** GraphQL APIs, an MCP-connected AI assistant, RAG over the company's policy documents, pluggable LLM providers, and a live eval suite.
 
-**Live demo:** https://invoicepilot-one.vercel.app
+**Live demo:** https://invoicepilot-livid.vercel.app
 **Stack:** Angular 22 · TypeScript · Node.js + Express · SQLite (`node:sqlite`) · GraphQL · Model Context Protocol (official TypeScript SDK) · Jest
 
 > Demo data is seeded in-memory on startup (8 customers, 20 invoices, 15 expenses, 10 payments). Dates are seeded relative to "today", so overdue invoices and "this quarter" figures are always realistic. No API key is required to try it.
