@@ -8,7 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
-const { createHandler } = require('graphql-http/lib/use/express');
+const { graphql } = require('graphql');
 const { getDb } = require('./store');
 const queries = require('./queries');
 const { schema, createRoot } = require('./graphql');
@@ -48,7 +48,24 @@ function createApp() {
   });
 
   // ---- GraphQL API (same data layer) ----
-  app.all('/graphql', createHandler({ schema, rootValue: createRoot(db) }));
+  // Executed directly (not via a streaming body handler) so it behaves
+  // identically locally and in serverless runtimes.
+  const gqlRoot = createRoot(db);
+  const runGraphQL = async (payload) => graphql({
+    schema, source: payload.query, rootValue: gqlRoot,
+    variableValues: payload.variables, operationName: payload.operationName,
+  });
+  app.post('/graphql', async (req, res) => {
+    if (!req.body || typeof req.body.query !== 'string') return res.status(400).json({ errors: [{ message: 'query is required' }] });
+    try { res.json(await runGraphQL(req.body)); } catch (e) { res.status(500).json({ errors: [{ message: e.message }] }); }
+  });
+  app.get('/graphql', async (req, res) => {
+    if (typeof req.query.query !== 'string') return res.status(400).json({ errors: [{ message: 'query is required' }] });
+    try {
+      const variables = req.query.variables ? JSON.parse(req.query.variables) : undefined;
+      res.json(await runGraphQL({ query: req.query.query, variables, operationName: req.query.operationName }));
+    } catch (e) { res.status(500).json({ errors: [{ message: e.message }] }); }
+  });
 
   // ---- Assistant ----
   app.get('/api/providers', (req, res) => res.json(llm.listProviders()));
