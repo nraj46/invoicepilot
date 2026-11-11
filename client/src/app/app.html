@@ -1,0 +1,25 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">IP</div>
+      <div>
+        <div class="brand-name">InvoicePilot</div>
+        <div class="brand-sub">BrightWeb Studio</div>
+      </div>
+    </div>
+    <nav>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">📊 Dashboard</a>
+      <a routerLink="/invoices" routerLinkActive="active">🧾 Invoices <span class="nav-tag">GraphQL</span></a>
+      <a routerLink="/expenses" routerLinkActive="active">💳 Expenses <span class="nav-tag">REST</span></a>
+      <a routerLink="/assistant" routerLinkActive="active">🤖 AI Assistant <span class="nav-tag">MCP + RAG</span></a>
+      <a routerLink="/evals" routerLinkActive="active">✅ Evals</a>
+    </nav>
+    <div class="sidebar-foot">
+      Angular 22 · Node.js + Express · SQLite<br />
+      REST + GraphQL · MCP tools · RAG · Evals
+    </div>
+  </aside>
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

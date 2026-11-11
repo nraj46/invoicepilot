@@ -1,0 +1,23 @@
+{
+  "name": "invoicepilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "InvoicePilot — AI invoice & expense manager for small business (Angular + Node.js/Express + SQLite, REST + GraphQL, MCP tools, RAG, LLM providers, evals)",
+  "engines": { "node": "24.x" },
+  "scripts": {
+    "start": "node server/src/index.js",
+    "test": "jest server/test --silent",
+    "build": "npm --prefix client run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "graphql-http": "^1.22.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
